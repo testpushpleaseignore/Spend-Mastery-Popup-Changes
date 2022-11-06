@@ -1,5 +1,8 @@
 # Introduction
-This is a boilerplate/template for Melvor Idle mods. Using Webpack, this will compile your mod to a single, uglified script file, largely reducing mod size and improving compatibilty with IDE features. The downside to this is it makes debugging in the browser a bit more difficult with the uglified source.
+The following changes are made to the "Spend Mastery Pool XP" popup screen:
+* Group masteries by game release, which would be the Base Game and the Throne Of The Herald releases
+ 
+*I am planning on adding additional changes to this window, but reach out to me in the linked GitHub page for any suggestions that you may have.*
 
 # Prerequisites
 Requires [Node.js](https://nodejs.org/en/)
