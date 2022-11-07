@@ -1,6 +1,7 @@
 # Introduction
 The following changes are made to the "Spend Mastery Pool XP" popup screen:
 * Group masteries by game release, which would be the Base Game and the Throne Of The Herald releases
+* masteries themselves now scroll, so that you can still see the buttons at the top of the window when scrolling
  
 *I am planning on adding additional changes to this window, but reach out to me in the linked GitHub page for any suggestions that you may have.*
 

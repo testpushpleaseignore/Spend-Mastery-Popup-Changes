@@ -45,12 +45,22 @@ function patch_SpendMasteryMenu_setSkill(){
 		this.masteryItems.forEach(function(item, index){ if (item !== undefined) item.remove(); });
 		this.masteryItems = [];
 
+		let masteriesScrollbox = document.getElementById("masteries-scrollbox");
+		if(!masteriesScrollbox){
+			masteriesScrollbox = document.createElement("div");
+			masteriesScrollbox.id = "masteries-scrollbox";
+			masteriesScrollbox.classList = "overflow-y-auto";
+			masteriesScrollbox.style.maxHeight = "80vh";
+		}
+
+		this.masteryItemContainer.appendChild(masteriesScrollbox);
+
 		if(!document.getElementById('base-game-mastery-group'))
 			this.baseGameMasteryGroup = createSpendMasteryMenuItemGroupElement('Base Game', 'base-game-mastery-group');
-			this.masteryItemContainer.appendChild(this.baseGameMasteryGroup);
+			masteriesScrollbox.appendChild(this.baseGameMasteryGroup);
 		if(!document.getElementById('TOTH-game-mastery-group'))
 			this.TOTHGameMasteryGroup = createSpendMasteryMenuItemGroupElement('Throne of the Herald', 'TOTH-game-mastery-group');
-			this.masteryItemContainer.appendChild(this.TOTHGameMasteryGroup);
+			masteriesScrollbox.appendChild(this.TOTHGameMasteryGroup);
 
         this.itemsByAction.clear();
         skill.sortedMasteryActions.forEach((action,i)=>{

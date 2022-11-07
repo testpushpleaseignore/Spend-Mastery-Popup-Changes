@@ -1,6 +1,6 @@
 {
   "name": "melvor-idle-mastery-popup-changes",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "\"Spend Mastery Pool XP\" popup changes",
   "main": "index.js",
   "scripts": {
