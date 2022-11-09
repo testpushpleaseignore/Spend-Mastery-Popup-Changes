@@ -49,7 +49,7 @@ function patch_SpendMasteryMenu_setSkill(){
 		if(!masteriesScrollbox){
 			masteriesScrollbox = document.createElement("div");
 			masteriesScrollbox.id = "masteries-scrollbox";
-			masteriesScrollbox.classList = "overflow-y-auto";
+			masteriesScrollbox.classList = "overflow-y-auto col-12 pl-1 pr-1";
 			masteriesScrollbox.style.maxHeight = "80vh";
 		}
 
@@ -62,38 +62,38 @@ function patch_SpendMasteryMenu_setSkill(){
 			this.TOTHGameMasteryGroup = createSpendMasteryMenuItemGroupElement('Throne of the Herald', 'TOTH-game-mastery-group');
 			masteriesScrollbox.appendChild(this.TOTHGameMasteryGroup);
 
-        this.itemsByAction.clear();
-        skill.sortedMasteryActions.forEach((action,i)=>{
+		this.itemsByAction.clear();
+		skill.sortedMasteryActions.forEach((action,i)=>{
 			const namespace = action._namespace.name;
 			const parentGroup = ['melvorD', 'melvorF'].includes(namespace) ? this.baseGameMasteryGroup : namespace == 'melvorTotH' ? this.TOTHGameMasteryGroup : this.baseGameMasteryGroup;
 			const groupContent = parentGroup.querySelector('.block-content');
 			const masteryItem = createElement('spend-mastery-menu-item', {
-                className: 'coi-12 col-md-6',
-                parent: groupContent
-            });
+				className: 'coi-12 col-md-6',
+				parent: groupContent
+			});
 
 			this.masteryItems[i] = masteryItem;
 
-            this.itemsByAction.set(action, masteryItem);
-            masteryItem.setAction(action);
-            masteryItem.updateProgress(skill, action, this.levelUpAmount);
-            if (game.settings.hideMaxLevelMasteries && skill.getMasteryLevel(action) >= 99)
-                hideElement(masteryItem);
-            else
-                showElement(masteryItem);
-        }
-        );
-        if (skill.masteryToken !== undefined) {
-            const tokenItem = skill.masteryToken;
-            this.tokenImage.src = tokenItem.media;
-            this.updateTokenQuantity(game.bank.getQty(tokenItem));
-            this.claimTokenButton.onclick = ()=>{
-                game.bank.claimItemOnClick(tokenItem, Infinity);
-                this.claimTokenButton.blur();
-            }
-            ;
-        }
-        this.poolDisplay.setSkill(skill);
+			this.itemsByAction.set(action, masteryItem);
+			masteryItem.setAction(action);
+			masteryItem.updateProgress(skill, action, this.levelUpAmount);
+			if (game.settings.hideMaxLevelMasteries && skill.getMasteryLevel(action) >= 99)
+				hideElement(masteryItem);
+			else
+				showElement(masteryItem);
+		}
+		);
+		if (skill.masteryToken !== undefined) {
+			const tokenItem = skill.masteryToken;
+			this.tokenImage.src = tokenItem.media;
+			this.updateTokenQuantity(game.bank.getQty(tokenItem));
+			this.claimTokenButton.onclick = ()=>{
+				game.bank.claimItemOnClick(tokenItem, Infinity);
+				this.claimTokenButton.blur();
+			}
+			;
+		}
+		this.poolDisplay.setSkill(skill);
 	};
 }
 
