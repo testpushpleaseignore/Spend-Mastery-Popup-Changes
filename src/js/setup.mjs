@@ -20,31 +20,32 @@ import LargeIcon from '../img/icon_large.png';
  * @param {ModContext} ctx 
  */
 export async function setup(ctx) {
-	/*await ctx.gameData.addPackage(ModData);*/
+	ctx.patch(SpendMasteryMenu, 'setSkill').replace(function(o, skill, game){
+		function createSpendMasteryMenuItemGroupElement(title, id){
+			const base = document.createElement('div');
+			base.classList = 'block col-12';
+			base.id = id;
+		
+			const header = document.createElement('div');
+			header.classList = 'block-header';
+			const headerTitle = document.createElement('h3');
+			headerTitle.classList = 'block-title';
+			headerTitle.innerHTML = title;
+			header.appendChild(headerTitle);
+			base.appendChild(header);
+		
+			const content = document.createElement('div');
+			content.classList = 'row gutters-tiny block-content';
+			base.appendChild(content);
+		
+			return base;
+		}
 	
-
-	/*
-	ctx.onInterfaceReady(() => {
-		const html = document.createElement('div');
-		SwalLocale.fire({
-		iconHtml: `<img class="modBoilerplate__logo-img" src="${ctx.getResourceUrl(LargeIcon)}" />`,
-		title: 'Mod Boilerplate',
-		html
-		});
-		ui.create(Greeter({ name: 'Melvor' }), html);
-	});
-	*/
-
-	patch_SpendMasteryMenu_setSkill();
-}
-
-function patch_SpendMasteryMenu_setSkill(){
-	SpendMasteryMenu.prototype.setSkill = function(skill, game){
 		this._currentSkill = skill;
-
+	
 		this.masteryItems.forEach(function(item, index){ if (item !== undefined) item.remove(); });
 		this.masteryItems = [];
-
+	
 		let masteriesScrollbox = document.getElementById("masteries-scrollbox");
 		if(!masteriesScrollbox){
 			masteriesScrollbox = document.createElement("div");
@@ -52,16 +53,16 @@ function patch_SpendMasteryMenu_setSkill(){
 			masteriesScrollbox.classList = "overflow-y-auto col-12 pl-1 pr-1";
 			masteriesScrollbox.style.maxHeight = "80vh";
 		}
-
+	
 		this.masteryItemContainer.appendChild(masteriesScrollbox);
-
+	
 		if(!document.getElementById('base-game-mastery-group'))
 			this.baseGameMasteryGroup = createSpendMasteryMenuItemGroupElement('Base Game', 'base-game-mastery-group');
 			masteriesScrollbox.appendChild(this.baseGameMasteryGroup);
 		if(!document.getElementById('TOTH-game-mastery-group'))
 			this.TOTHGameMasteryGroup = createSpendMasteryMenuItemGroupElement('Throne of the Herald', 'TOTH-game-mastery-group');
 			masteriesScrollbox.appendChild(this.TOTHGameMasteryGroup);
-
+	
 		this.itemsByAction.clear();
 		skill.sortedMasteryActions.forEach((action,i)=>{
 			const namespace = action._namespace.name;
@@ -71,9 +72,9 @@ function patch_SpendMasteryMenu_setSkill(){
 				className: 'coi-12 col-md-6',
 				parent: groupContent
 			});
-
+	
 			this.masteryItems[i] = masteryItem;
-
+	
 			this.itemsByAction.set(action, masteryItem);
 			masteryItem.setAction(action);
 			masteryItem.updateProgress(skill, action, this.levelUpAmount);
@@ -94,25 +95,5 @@ function patch_SpendMasteryMenu_setSkill(){
 			;
 		}
 		this.poolDisplay.setSkill(skill);
-	};
-}
-
-function createSpendMasteryMenuItemGroupElement(title, id){
-	const base = document.createElement('div');
-	base.classList = 'block col-12';
-	base.id = id;
-
-	const header = document.createElement('div');
-	header.classList = 'block-header';
-	const headerTitle = document.createElement('h3');
-	headerTitle.classList = 'block-title';
-	headerTitle.innerHTML = title;
-	header.appendChild(headerTitle);
-	base.appendChild(header);
-
-	const content = document.createElement('div');
-	content.classList = 'row gutters-tiny block-content';
-	base.appendChild(content);
-
-	return base;
+	});
 }
